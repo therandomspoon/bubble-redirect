@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>document (1).md</title>
+  <title>Harry Potter API C# documentation</title>
   <style>
   @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.css");
 
@@ -83,8 +83,9 @@
 <h1 class="code-line has-line-data" data-line-start="0" data-line-end="1"><a id="How_to_add_a_new_endpoint_0"></a>How to add a new endpoint</h1>
 <h2 class="code-line has-line-data" data-line-start="2" data-line-end="3"><a id="Step_1_Add_a_class_2"></a>Step 1. Add a class</h2>
 <p class="has-line-data" data-line-start="3" data-line-end="5">The first step into creating the new endpoint is to add a class for the API data. This allows for each API JSON object to be put into an object which the code later accesses.<br>
-<strong>How to add to the code</strong></p>
-<pre><code class="has-line-data" data-line-start="6" data-line-end="20">using System.Text.Json.Serialization;
+<em><strong>This must exist both server and client side in the …/models/</strong></em></p>
+<p class="has-line-data" data-line-start="6" data-line-end="7"><strong>How to add to the code</strong></p>
+<pre><code class="has-line-data" data-line-start="8" data-line-end="22">using System.Text.Json.Serialization;
 
 namespace HarryPotter.Server.Models
 {
@@ -98,8 +99,8 @@ namespace HarryPotter.Server.Models
     }
 }
 </code></pre>
-<p class="has-line-data" data-line-start="20" data-line-end="21"><strong>Example of integration with books</strong></p>
-<pre><code class="has-line-data" data-line-start="22" data-line-end="41">using System.Text.Json.Serialization;
+<p class="has-line-data" data-line-start="22" data-line-end="23"><strong>Example of integration with books</strong></p>
+<pre><code class="has-line-data" data-line-start="24" data-line-end="43">using System.Text.Json.Serialization;
 
 namespace HarryPotter.Server.Models
 {
@@ -118,10 +119,10 @@ namespace HarryPotter.Server.Models
     }
 }
 </code></pre>
-<h2 class="code-line has-line-data" data-line-start="42" data-line-end="43"><a id="Step_2_Alter_HarryPotterService_42"></a>Step 2. Alter HarryPotterService</h2>
-<p class="has-line-data" data-line-start="43" data-line-end="44">Next, add a get asynchronous method to get the API data. <strong>Asynchronous means that the API data can be fetched without freezing the page.</strong></p>
-<p class="has-line-data" data-line-start="45" data-line-end="46"><strong>How to add to the code</strong></p>
-<pre><code class="has-line-data" data-line-start="47" data-line-end="58">public async Task&lt;List&lt;[LIST NAME]&gt;&gt; Get[ITEM NAME]Async()
+<h2 class="code-line has-line-data" data-line-start="44" data-line-end="45"><a id="Step_2_Alter_HarryPotterService_Client_Side_44"></a>Step 2. Alter HarryPotterService [Client Side]</h2>
+<p class="has-line-data" data-line-start="45" data-line-end="46">Next, add a get asynchronous method to get the API data. <strong>Asynchronous means that the API data can be fetched without freezing the page.</strong></p>
+<p class="has-line-data" data-line-start="47" data-line-end="48"><strong>How to add to the code</strong></p>
+<pre><code class="has-line-data" data-line-start="49" data-line-end="60">public async Task&lt;List&lt;[LIST NAME]&gt;&gt; Get[ITEM NAME]Async()
 {
     HttpResponseMessage response = await _httpClient.GetAsync($&quot;[API URL HERE]&quot;);
     response.EnsureSuccessStatusCode();
@@ -132,8 +133,8 @@ namespace HarryPotter.Server.Models
     return [variable names] ?? new List&lt;[LIST NAME]&gt;();
 }
 </code></pre>
-<p class="has-line-data" data-line-start="59" data-line-end="60"><strong>Example of integration with books</strong></p>
-<pre><code class="has-line-data" data-line-start="61" data-line-end="72">public async Task&lt;List&lt;Book&gt;&gt; GetBooksAsync()
+<p class="has-line-data" data-line-start="61" data-line-end="62"><strong>Example of integration with books</strong></p>
+<pre><code class="has-line-data" data-line-start="63" data-line-end="74">public async Task&lt;List&lt;Book&gt;&gt; GetBooksAsync()
         {
             HttpResponseMessage response = await _httpClient.GetAsync($&quot;https://potterapi-fedeperin.vercel.app/en/books&quot;); //defines url for the api request + page
             response.EnsureSuccessStatusCode();
@@ -144,10 +145,101 @@ namespace HarryPotter.Server.Models
             return books ?? new List&lt;Book&gt;();
         }
 </code></pre>
-<h2 class="code-line has-line-data" data-line-start="73" data-line-end="74"><a id="Step_3_Add_razor_page_73"></a>Step 3. Add razor page</h2>
-<p class="has-line-data" data-line-start="74" data-line-end="75">Razor pages act as the frontend using C# and HTML to write a page</p>
-<p class="has-line-data" data-line-start="76" data-line-end="77"><strong>Example of integration with books</strong></p>
-<pre><code class="has-line-data" data-line-start="78" data-line-end="154">@page &quot;/[page name]&quot; 
+<h2 class="code-line has-line-data" data-line-start="75" data-line-end="76"><a id="Step_3_Alter_HarryPotterServicecs_Server_Side_75"></a>Step 3. Alter HarryPotterService.cs [Server Side]</h2>
+<p class="has-line-data" data-line-start="76" data-line-end="77">Next add logic to the HarryPotterService.cs on the server side to decrypt the JSON from the API request.</p>
+<p class="has-line-data" data-line-start="78" data-line-end="79"><strong>How to add to the code</strong></p>
+<pre><code class="has-line-data" data-line-start="80" data-line-end="110">using System.Text.Json;
+using HarryPotter.Server.Models;
+using HarryPotter.Server.Interfaces;
+using HarryPotter.Client.Pages;
+
+namespace HarryPotter.Server.Services
+{
+    public class HarryPotterService : IHarryPotterService
+    {
+        private readonly HttpClient _httpClient;
+
+        public HarryPotterService(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+        public async Task&lt;List&lt;[List Name]&gt;&gt; Get[Function name]Async()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(&quot;[Item]&quot;);
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync();
+            List&lt;[List name]&gt;? [items] = JsonSerializer.Deserialize&lt;List&lt;Book&gt;&gt;(json); //interpret json from api call
+
+            return [items] ?? new List&lt;[List name]&gt;();
+        }
+    }
+}
+
+</code></pre>
+<p class="has-line-data" data-line-start="111" data-line-end="112"><strong>Example of integration using books</strong></p>
+<pre><code class="has-line-data" data-line-start="113" data-line-end="142">using System.Text.Json;
+using HarryPotter.Server.Models;
+using HarryPotter.Server.Interfaces;
+using HarryPotter.Client.Pages;
+
+namespace HarryPotter.Server.Services
+{
+    public class HarryPotterService : IHarryPotterService
+    {
+        private readonly HttpClient _httpClient;
+
+        public HarryPotterService(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+        public async Task&lt;List&lt;Book&gt;&gt; GetBooksAsync()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(&quot;books&quot;);
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync();
+            List&lt;Book&gt;? books = JsonSerializer.Deserialize&lt;List&lt;Book&gt;&gt;(json); //interpret json from api call
+
+            return books ?? new List&lt;Book&gt;();
+        }
+    }
+}
+</code></pre>
+<h2 class="code-line has-line-data" data-line-start="143" data-line-end="144"><a id="Step_4_Alter_IHarryPotterServicecs_143"></a>Step 4. Alter IHarryPotterService.cs</h2>
+<p class="has-line-data" data-line-start="144" data-line-end="146">Add the function linking the List of the objects to the get asynchronous function.<br>
+<strong>How to add to the code</strong></p>
+<pre><code class="has-line-data" data-line-start="147" data-line-end="158">using HarryPotter.Server.Models;
+
+namespace HarryPotter.Server.Interfaces
+{
+    public interface IHarryPotterService
+    {
+        Task&lt;List&lt;[LIST NAME]&gt;&gt; Get[WHATEVER YOU NAMED THE FUNCTION]Async();
+    }
+}
+
+</code></pre>
+<p class="has-line-data" data-line-start="158" data-line-end="159"><strong>Example of integration with books</strong></p>
+<pre><code class="has-line-data" data-line-start="160" data-line-end="173">using HarryPotter.Server.Models;
+
+namespace HarryPotter.Server.Interfaces
+{
+    public interface IHarryPotterService
+    {
+        Task&lt;List&lt;Character&gt;&gt; GetCharactersAsync();
+        Task&lt;List&lt;Spell&gt;&gt; GetSpellsAsync();
+        Task&lt;List&lt;Book&gt;&gt; GetBooksAsync();
+    }
+}
+
+</code></pre>
+<h2 class="code-line has-line-data" data-line-start="175" data-line-end="176"><a id="Step_5_Add_razor_page_175"></a>Step 5. Add razor page</h2>
+<p class="has-line-data" data-line-start="176" data-line-end="177">Razor pages act as the frontend using C# and HTML to write a page</p>
+<p class="has-line-data" data-line-start="178" data-line-end="179"><strong>Example of integration with books</strong></p>
+<pre><code class="has-line-data" data-line-start="180" data-line-end="256">@page &quot;/[page name]&quot; 
 @using Blazorise.LoadingIndicator
 @using HarryPotter.Client.Core.Models @* Import classes *@
 @using HarryPotter.Client.Core.Services
@@ -223,8 +315,8 @@ namespace HarryPotter.Server.Models
     }
 }
 </code></pre>
-<p class="has-line-data" data-line-start="154" data-line-end="155"><strong>Example of a razor page code for Books. This is adaptable to any</strong></p>
-<pre><code class="has-line-data" data-line-start="156" data-line-end="232">@page &quot;/books&quot; 
+<p class="has-line-data" data-line-start="256" data-line-end="257"><strong>Example of a razor page code for Books. This is adaptable to any</strong></p>
+<pre><code class="has-line-data" data-line-start="258" data-line-end="334">@page &quot;/books&quot; 
 @using Blazorise.LoadingIndicator
 @using HarryPotter.Client.Core.Models @* Import classes *@
 @using HarryPotter.Client.Core.Services
